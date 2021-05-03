@@ -1,0 +1,12 @@
+{
+  "appTitle": "The Movie App",
+  "releaseDate": "Release date",
+  "addNewMovie": "Add new movie",
+  "saveMovie": "save Movie",
+  "movieTitle": "movie title",
+  "description": "description",
+  "chooseFiles": "choose Files",
+  "home": "Home",
+  "addMovie" : "Add Movie",
+  "top5" : "Top 5"
+}
