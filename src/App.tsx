@@ -6,7 +6,7 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
 import MuiTheme from './theme/muiTheme';
 import { StaleTime } from './definitions/enums';
-import Router from "./core/router/Router";
+import Router from './core/router/Router';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -19,10 +19,10 @@ const queryClient = new QueryClient({
 const app: FunctionComponent = () => {
   return (
     <ThemeProvider theme={MuiTheme}>
-        <QueryClientProvider client={queryClient}>
-          <ReactQueryDevtools initialIsOpen={false} />
-          <Router />
-        </QueryClientProvider>
+      <QueryClientProvider client={queryClient}>
+        <ReactQueryDevtools initialIsOpen={false} />
+        <Router />
+      </QueryClientProvider>
     </ThemeProvider>
   );
 };

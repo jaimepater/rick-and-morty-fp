@@ -4,9 +4,7 @@ import { useQuery } from 'react-query';
 // @ts-ignore
 import { getCharacter } from 'rickmortyapi';
 import { Grid } from '@material-ui/core';
-import { filter, intersection, last, map, reduce } from 'fp-ts/Array';
-import { Eq } from 'fp-ts/string';
-import { flow } from 'fp-ts/function';
+import { compose, filter, intersection, last, map, reduce } from 'ramda';
 import { Character, RickAndMortyApiResult } from '../../definitions/types';
 import CharacterList from '../../components/CharacterList/CharacterList';
 
@@ -18,15 +16,17 @@ const EpisodesIntersection: FunctionComponent = () => {
   const [checked, setChecked] = React.useState<number[]>([]);
   const isSelected = (x: Character) => checked.includes(x.id);
   const characters = charactersResp?.results || [];
-  const equalIntersection = intersection(Eq);
-  const episodeIntersection = (acc: string[], x: Character) => equalIntersection(acc, x.episode);
+  const episodeIntersection = (acc: string[], x: Character) => intersection(acc, x.episode);
   const characterSelected = filter(isSelected);
-  const reduceEpisodes = reduce(characters[0]?.episode, episodeIntersection);
-  const episodesUrls = flow(characterSelected, reduceEpisodes)(characters);
+  const reduceEpisodes = reduce(episodeIntersection, characters[0]?.episode);
+  const episodesUrls = compose<Character[], Character[], string[]>(
+    reduceEpisodes,
+    characterSelected,
+  )(characters);
   console.log('episodesUrls', episodesUrls);
-  // console.log('aaaa', last([1, 2, 5, 6]).fold());
-  // const test = (x: string) => x.split('/').reverse()[0];
-  const episodesNumbers = map(flow((x: string) => x.split('/'), last))(episodesUrls || []);
+  const episodesNumbers = map(
+    compose<string, string[], string[]>(last, (x: string) => x.split('/')),
+  )(episodesUrls || []);
   // const episodesNumbers = map(test)(episodesUrls || []);
   console.log('episodesNumbers', episodesNumbers);
 
