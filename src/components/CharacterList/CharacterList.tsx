@@ -5,20 +5,29 @@ import { Character } from '../../definitions/types';
 import CharacterItem from './CharacterItem/CharacterItem';
 
 interface CharacterListProps {
-  characters: Character[];
-  onChange: Function;
-  checked: number[];
+  characters: Partial<Character>[];
+  onChange?: Function;
+  checked?: number[];
+  hasCheckBox: boolean;
 }
 
 const CharacterList: FunctionComponent<CharacterListProps> = ({
   characters,
   onChange,
+  hasCheckBox,
   checked,
 }) => {
   return (
     <List dense>
       {characters.map(character => {
-        return <CharacterItem character={character} onChange={onChange} checked={checked} />;
+        return (
+          <CharacterItem
+            character={character}
+            hasCheckBox={hasCheckBox}
+            onChange={onChange}
+            checked={checked}
+          />
+        );
       })}
     </List>
   );
